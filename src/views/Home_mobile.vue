@@ -11,7 +11,7 @@
 -->
 <template>
   <div class="home">
-    <NavBar :msg="tags"></NavBar>
+    <NavBar :tags="tags"></NavBar>
 
     <!-- 视频列表正文 -->
     <div class="content" v-loading="loading">
@@ -27,7 +27,10 @@
         </el-select>
       </div>
       <!-- 播放列表正文 -->
-      <ul class="videolist">
+      <!-- 搜索关键字有错误的情况下 -->
+      <h1 v-if="error">{{reason}}</h1>
+      <!-- 没有的情况下 -->
+      <ul class="videolist" v-else>
         <li class="list-item" v-for="item in listvideo" :key="item._id.$oid">
           <div class="video-thumbnail">
             <img :src="'/images/covers/' + item.item.cover_image" width="120px" height="75px" />
@@ -54,6 +57,7 @@
 
       <!-- 分页器 -->
       <el-pagination
+        v-if="!error"
         :hide-on-single-page="true"
         :page-size="20"
         :pager-count="5"
@@ -76,7 +80,7 @@ export default {
       // 请求到的视频列表
       listvideo: [],
       // 请求到的标签列表
-      tags: [],
+      tags: {},
       // 一共请求到的页数
       page: 1,
       // 每一页的视频数
@@ -95,7 +99,11 @@ export default {
       // 视频列表是否属于加载状态的判断
       loading: false,
       // 页面是否显示搜索结果的判断
-      ifSearch: false
+      ifSearch: false,
+      // 搜索内容是否有问题的判断
+      error: false,
+      // 错误原因
+      reason: ""
     };
   },
   computed: {
@@ -169,9 +177,23 @@ export default {
             query: this.query
           }
         }).then(result => {
-          this.listvideo = result.data.data.videos;
-          this.count = result.data.data.count;
-          this.tags = result.data.data.tags;
+          if (result.data.status == "SUCCEED") {
+            this.error = false;
+            this.listvideo = result.data.data.videos;
+            this.count = result.data.data.count;
+            this.tags = result.data.data.tags;
+          } else {
+            // 包含非法字符的时候
+            if (result.data.data.reason == "INCORRECT_QUERY") {
+              this.error = true;
+              this.reason = "查询语法错误！";
+            }
+            // NOT使用错误的时候
+            else if (result.data.data.reason == "FAILED_NOT_OP") {
+              this.error = true;
+              this.reason = "所输入的查询不能与NOT连用！";
+            }
+          }
           // 加载结束,加载动画消失
           this.loading = false;
 
