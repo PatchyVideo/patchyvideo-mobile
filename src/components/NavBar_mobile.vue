@@ -22,6 +22,7 @@
             src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
           ></el-avatar>
         </div>
+        <div v-show="showHotTags" @click="showHotTags=false" class="cancelSearch">取消</div>
         <div class="navSearch">
           <el-autocomplete
             id="ipt"
@@ -33,7 +34,6 @@
             placeholder="想看什么视频呢"
             size="mini"
             @focus="showHotTags=true"
-            @blur="showHotTags=false"
           >
             <el-button slot="append" icon="el-icon-search" @click="gotoHome"></el-button>
             <template slot-scope="{ item }">
@@ -76,14 +76,11 @@
       @touchmove.prevent
       @mousewheel.prevent
     >
-      <h3>热门标签:</h3>
+      <h3 v-if="ifSearch">相关标签</h3>
+      <h3 v-else>热门标签:</h3>
       <ul>
-        <li class="tag belong-to-detail" v-for="(key, val) in tags" :key="val">
-          <h3>{{ val }}</h3>
-          <!-- 根据tag名称自动渲染tag颜色 -->
+        <li class="tag belong-to-home" v-for="(val, key) in tags" :key="key">
           <p
-            v-for="item in key"
-            :key="item"
             v-bind:class="{
               Copyright: val == 'Copyright',
               Language: val == 'Language',
@@ -92,8 +89,8 @@
               General: val == 'General',
               Meta: val == 'Meta'
             }"
-            @click="gotoHome(item)"
-          >{{ item }}</p>
+            @click="searchTags(key)"
+          >{{ key }}</p>
         </li>
       </ul>
     </div>
@@ -121,7 +118,6 @@
 
 <script>
 export default {
-  props: ["tags"],
   data() {
     return {
       // 搜索框的内容，不知道为什么在自动补全之后会被清空
@@ -158,8 +154,17 @@ export default {
     // 搜索的关键字
     iptVal2() {
       return this.$store.state.TopNavbarSearching;
+    },
+    // 网站是否出于搜索界面
+    ifSearch() {
+      if (this.$route.query.keyword != undefined) {
+        return true;
+      } else {
+        return false;
+      }
     }
   },
+  props: ["tags"],
   created() {},
   methods: {
     // 清除搜索数据
@@ -168,6 +173,7 @@ export default {
     },
     // 点击搜索按钮使home页面显示搜索结果
     gotoHome() {
+      this.showHotTags = false;
       if (this.iptVal != "") {
         this.$router
           .push({ path: "/mobile/home", query: { keyword: this.iptVal } })
@@ -179,6 +185,16 @@ export default {
         if (JSON.stringify(this.$route.query) == "{}") return;
         this.$router.push({ path: "/mobile/home" });
       }
+    },
+    // 点击标签显示搜索结果
+    searchTags(tags) {
+      this.iptVal = tags;
+      this.showHotTags = false;
+      this.$router
+        .push({ path: "/mobile/home", query: { keyword: tags } })
+        .catch(err => {
+          return err;
+        });
     },
     // --------------------------------------------------危险提示--------------------------------------------------
     //                                   此函数因为直接操纵dom可能导致网站受到攻击!
@@ -293,6 +309,9 @@ export default {
 .avatar {
   margin: 7px 5px 5px 5px;
 }
+.cancelSearch {
+  color: #606266;
+}
 .navSearch {
   height: 30px;
   flex: 0 0 70%;
@@ -321,15 +340,21 @@ export default {
 
 .hotTags {
   width: 100%;
-  height: 100%;
+  min-height: 100%;
+  overflow-y: scroll;
   position: absolute;
   left: 0;
   top: 40px;
   z-index: 998;
   background-color: rgba(255, 255, 255, 0.938);
   text-align: left;
-  padding-left: 20px;
-  padding-top: 20px;
+  padding-left: 10px;
+  padding-top: 10px;
+}
+.belong-to-home p {
+  display: inline;
+  font-size: 18px;
+  line-height: 25px;
 }
 
 .drawer {
