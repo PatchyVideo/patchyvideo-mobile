@@ -14,6 +14,9 @@ import resetpassword from "../views/ResetPassword.vue";
 import edittag from "../views/Edittag.vue";
 import store from "../store/index.js";
 import User from "../views/User";
+
+// 下面是移动端页面/组件
+import Home_mobile from "../views/Home_mobile.vue";
 Vue.use(VueRouter);
 
 /*
@@ -55,7 +58,7 @@ const routes = [
   {
     path: "/",
     redirect() {
-      return "/home";
+      return "/mobile/home";
     }
   },
   {
@@ -118,6 +121,11 @@ const routes = [
   {
     path: "/users/:id",
     component: User
+  },
+  // 下面是移动端页面
+  {
+    path: "/mobile/home",
+    component: Home_mobile
   }
 ];
 
