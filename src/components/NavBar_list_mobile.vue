@@ -89,7 +89,7 @@ export default {
     // 用户头像
     userAvatar() {
       if (this.$store.state.userAvatar == "default") {
-        return "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png";
+        return require("../static/img/defaultAvatar.jpg");
       } else {
         return "be/images/userphotos/" + this.$store.state.userAvatar;
       }
