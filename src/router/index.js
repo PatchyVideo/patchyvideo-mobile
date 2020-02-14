@@ -17,6 +17,7 @@ import User from "../views/User";
 
 // 下面是移动端页面/组件
 import Home_mobile from "../views/Home_mobile.vue";
+import List_mobile from "../views/List_mobile.vue";
 import Login_mobile from "../views/Login_mobile.vue";
 
 Vue.use(VueRouter);
@@ -128,6 +129,10 @@ const routes = [
   {
     path: "/mobile/home",
     component: Home_mobile
+  },
+  {
+    path: "/mobile/list",
+    component: List_mobile
   },
   {
     path: "/mobile/login",

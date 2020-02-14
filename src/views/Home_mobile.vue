@@ -64,6 +64,7 @@
         :pager-count="5"
         layout="prev, pager, next"
         :total="count"
+        :current-page="this.page"
         @current-change="handleCurrentChange"
       ></el-pagination>
 
