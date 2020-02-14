@@ -1,8 +1,8 @@
-<!--    vue页面：Home_mobile.vue     -->
+<!--    vue页面：list_mobile.vue     -->
 <!--
     页面：paychyvideo-mobile的主页面
     功能：展示网站收录的所有视频/展示搜索结果
-    包含组件：
+    包含组件：NavBar
     其他说明：
     更新日志：
       2/14/2020：

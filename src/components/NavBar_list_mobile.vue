@@ -1,4 +1,4 @@
-<!--    vue组件：NavBar_mobile.vue     -->
+<!--    vue组件：NavBar_list_mobile.vue     -->
 <!--
     页面：paychyvideo-mobile的导航栏
     大小：100% * 64px
@@ -6,7 +6,7 @@
     必要传入参数：暂无
     其他说明：
     更新日志：
-
+      1.release
     ★待解决问题：
       1.播放列表里链接的复制功能因为涉及到对dom的直接操作，所以可能会有被抓住漏洞的风险
 -->
