@@ -331,8 +331,6 @@ export default {
   border: 1px solid #c8c8c8;
   background-color: hsla(0, 0%, 71%, 0.1);
 }
-.middle input:focus {
-}
 
 .login {
   padding: 0px 5px;
