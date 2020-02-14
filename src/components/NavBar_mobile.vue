@@ -168,6 +168,14 @@ export default {
     iptVal2() {
       return this.$store.state.TopNavbarSearching;
     },
+    // 搜索的关键字
+    query() {
+      if (this.$route.query.keyword != undefined) {
+        return this.$route.query.keyword;
+      } else {
+        return "";
+      }
+    },
     // 网站是否出于搜索界面
     ifSearch() {
       if (this.$route.query.keyword != undefined) {
@@ -197,6 +205,10 @@ export default {
       this.$store.state.username != ""
     ) {
       this.login = true;
+    }
+    // 判断是否需要搜索
+    if (this.query != "") {
+      this.iptVal = this.query;
     }
     this.getCookie();
   },
