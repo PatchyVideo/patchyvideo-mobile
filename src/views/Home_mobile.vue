@@ -39,7 +39,7 @@
           <div class="video-detail">
             <p class="video-detail-title">
               <router-link
-                :to="{ path: '/video', query: { id: item._id.$oid } }"
+                :to="{ path: '/mobile/detail', query: { id: item._id.$oid } }"
               >{{ item.item.title }}</router-link>
             </p>
             <div class="video-detail-desc">
