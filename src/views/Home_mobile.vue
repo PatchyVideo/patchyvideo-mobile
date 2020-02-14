@@ -151,6 +151,11 @@ export default {
     this.$store.commit("changeBgc", "home");
     // 修改网站标题
     document.title = "Patchyvideo";
+    // 判断是否需要搜索
+    if (this.query != "") {
+      this.ifSearch = true;
+      document.title = " 搜索结果- " + this.query;
+    }
     // 获取视频列表
     this.getListVideo();
   },
@@ -242,6 +247,8 @@ export default {
       this.page = 1;
       //监听路由query的值，当query的值为空时，说明默认是首页，调用this.getListVideo获取首页数据并渲染。
       if (JSON.stringify(this.$route.query) == "{}") {
+        // 修改网站标题
+        document.title = "Patchyvideo";
         this.ifSearch = false;
         this.getListVideo();
         return;
