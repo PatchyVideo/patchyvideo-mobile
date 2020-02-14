@@ -60,7 +60,7 @@
         </div>
         <el-divider direction="vertical"></el-divider>
         <div class="routerItem">
-          <router-link to="/">播放列表</router-link>
+          <router-link to="/mobile/list">播放列表</router-link>
         </div>
       </div>
     </div>
@@ -237,11 +237,10 @@ export default {
             if (arr2[1] != "") {
               this.login = true;
               this.$store.commit("getUserName", arr2[1]);
-              return true;
             }
           }
-          l;
         }
+        return true;
       }
       this.$store.commit("getUserName", "");
       return false;
