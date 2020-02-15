@@ -111,7 +111,7 @@
           <router-link
             :to="{ path: '/mobile/listdetail', query: { id: item._id.$oid } }"
             tag="a"
-            @click.native="reload"
+            class="listItemTitle"
           >{{ item.title.english }}</router-link>
           <router-link
             v-if="item.next != ''"
@@ -372,5 +372,10 @@ export default {
   display: flex;
   display: -webkit-flex;
   justify-content: space-between;
+  white-space: nowrap;
+}
+.listItemTitle {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>
