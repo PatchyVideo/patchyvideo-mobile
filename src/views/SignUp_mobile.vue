@@ -82,7 +82,6 @@
 </template>
 
 <script>
-import login from "../views/Login.vue";
 export default {
   data() {
     // 校验用户名是否已经存在
@@ -245,8 +244,7 @@ export default {
       window.document.cookie =
         "username" + ":" + username + ";path=/;expires=" + date.toGMTString();
     }
-  },
-  components: { login }
+  }
 };
 </script>
 

@@ -1,19 +1,6 @@
 ﻿import Vue from "vue";
 import VueRouter from "vue-router";
-import error from "../views/404.vue";
-import Home from "../views/Home.vue";
-import detail from "../views/Detail.vue";
-import lists from "../views/Lists.vue";
-import createVideoList from "../views/CreateVideoList.vue";
-import listdetail from "../views/ListDetail.vue";
-import postvideo from "../views/PostVideo.vue";
-import login from "../views/Login.vue";
-import signup from "../views/SignUp.vue";
-import forgetPassword from "../views/ForgetPassword.vue";
-import resetpassword from "../views/ResetPassword.vue";
-import edittag from "../views/Edittag.vue";
 import store from "../store/index.js";
-import User from "../views/User";
 
 // 下面是移动端页面/组件
 import Home_mobile from "../views/Home_mobile.vue";
@@ -22,6 +9,7 @@ import List_mobile from "../views/List_mobile.vue";
 import ListDetail_mobile from "../views/ListDetail_mobile.vue";
 import Login_mobile from "../views/Login_mobile.vue";
 import SignUp_mobile from "../views/SignUp_mobile.vue";
+import error from "../views/404.vue";
 
 Vue.use(VueRouter);
 
@@ -71,62 +59,6 @@ const routes = [
     path: "/404",
 
     component: error
-  },
-  {
-    path: "/home",
-
-    component: Home
-  },
-  {
-    path: "/lists",
-
-    component: lists
-  },
-  {
-    path: "/createVideoList",
-    component: createVideoList
-  },
-  {
-    path: "/listdetail",
-
-    component: listdetail
-  },
-  {
-    path: "/postvideo",
-    component: postvideo
-  },
-  {
-    path: "/video",
-
-    component: detail
-  },
-
-  {
-    path: "/login",
-
-    component: login
-  },
-  {
-    path: "/signup",
-
-    component: signup
-  },
-  {
-    path: "/forgetPassword",
-    component: forgetPassword
-  },
-  {
-    path: "/resetpassword",
-    component: resetpassword
-  },
-  {
-    path: "/edittag",
-
-    component: edittag
-  },
-  {
-    path: "/users/:id",
-    component: User
   },
   // 下面是移动端页面
   {

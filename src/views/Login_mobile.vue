@@ -56,7 +56,6 @@
 </template>
 
 <script>
-import signup from "../views/SignUp";
 export default {
   data() {
     return {
@@ -225,8 +224,7 @@ export default {
         ";path=/;expires=" +
         date.toUTCString();
     }
-  },
-  components: { signup }
+  }
 };
 </script>
 
