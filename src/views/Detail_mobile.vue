@@ -11,7 +11,10 @@
   <div style="height:100%">
     <!-- 页头 -->
     <div class="head">
-      <el-page-header @back="goBack" content="视频详情"></el-page-header>
+      <div class="goBack" @click="goBack()">
+        <i class="el-icon-back"></i>返回
+      </div>
+      <el-divider direction="vertical"></el-divider>视频详情 - Patchyvideo
     </div>
 
     <!-- 页面正文 -->
@@ -252,6 +255,11 @@ export default {
   height: 40px;
   display: flex;
   align-items: center;
+  background-color: #00000002;
+  box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.1);
+}
+.goBack {
+  margin-left: 10px;
 }
 .content {
   width: 100%;
@@ -261,6 +269,7 @@ export default {
   width: 100%;
   display: block;
   margin: 0 auto;
+  margin-top: 8px;
 }
 
 .openOriginalWeb {
