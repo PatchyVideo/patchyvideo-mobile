@@ -109,7 +109,7 @@
           >【前一篇】</router-link>
           <span v-else>【没有啦】</span>
           <router-link
-            :to="{ path: '/listdetail', query: { id: item._id.$oid } }"
+            :to="{ path: '/mobile/listdetail', query: { id: item._id.$oid } }"
             tag="a"
             @click.native="reload"
           >{{ item.title.english }}</router-link>
