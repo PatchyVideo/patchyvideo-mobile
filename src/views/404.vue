@@ -12,7 +12,7 @@
     <div class="errorPage">
       <h1>
         哎呀，页面好像出错了...
-        <router-link to="/home">点我返回主页</router-link>
+        <router-link to="/">点我返回主页</router-link>
       </h1>
       <el-image style="width: 50%;" :src="url" :fit="fits[0]"></el-image>
     </div>
