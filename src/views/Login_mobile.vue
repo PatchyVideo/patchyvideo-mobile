@@ -41,9 +41,7 @@
       <!-- 标题 -->
       <router-link class="title" to="/mobile/home">PatchyVideo</router-link>
       <div class="top in">
-        <router-link to="/login">登录</router-link>
-        <b>·</b>
-        <router-link to="/signup">注册</router-link>
+        <router-link to="/mobile/login">登录</router-link>
       </div>
 
       <!-- 输入账号和密码的框 -->
@@ -117,6 +115,9 @@ export default {
     this.$store.commit("changeBgc", "login");
     // 修改网站标题
     document.title = "登录 - Patchyvideo";
+    console.log(
+      "原图P站ID:53270459, 如有侵权请联系开发人员(本站账号: admin)删除"
+    );
   },
   mounted() {},
   methods: {
@@ -264,16 +265,16 @@ export default {
   position: absolute;
   width: 100%;
   height: 100%;
-  background: url("../static/img/56363518.jpg");
+  background: url("../static/img/53270459.jpg");
   background-size: cover;
   background-attachment: fixed;
   background-position: center center;
   z-index: 1;
-  -webkit-filter: blur(2px);
-  -moz-filter: blur(2px);
-  -o-filter: blur(2px);
-  -ms-filter: blur(2px);
-  filter: blur(2px);
+  -webkit-filter: blur(1px);
+  -moz-filter: blur(1px);
+  -o-filter: blur(1px);
+  -ms-filter: blur(1px);
+  filter: blur(1px);
 }
 .alert {
   font-size: 20px;
