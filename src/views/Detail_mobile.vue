@@ -251,6 +251,9 @@ export default {
 
 <style scoped>
 .head {
+  position: absolute;
+  top: 0;
+  z-index: 998;
   width: 100%;
   height: 40px;
   display: flex;
@@ -262,6 +265,8 @@ export default {
   margin-left: 10px;
 }
 .content {
+  z-index: 10;
+  margin-top: 37px;
   width: 100%;
   min-height: 100%;
 }
@@ -269,7 +274,6 @@ export default {
   width: 100%;
   display: block;
   margin: 0 auto;
-  margin-top: 8px;
 }
 
 .openOriginalWeb {
