@@ -21,6 +21,7 @@ import Detail_mobile from "../views/Detail_mobile.vue";
 import List_mobile from "../views/List_mobile.vue";
 import ListDetail_mobile from "../views/ListDetail_mobile.vue";
 import Login_mobile from "../views/Login_mobile.vue";
+import SignUp_mobile from "../views/SignUp_mobile.vue";
 
 Vue.use(VueRouter);
 
@@ -147,6 +148,10 @@ const routes = [
   {
     path: "/mobile/login",
     component: Login_mobile
+  },
+  {
+    path: "/mobile/signUp",
+    component: SignUp_mobile
   }
 ];
 

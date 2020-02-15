@@ -43,15 +43,13 @@
             @keyup.enter.native="login"
           ></el-input>
         </el-form-item>
-        <p style="text-align: left;">
-          <router-link to="/forgetPassword" class="forgetPassword">忘了密码？</router-link>
-        </p>
         <p id="status" style="text-align: center;" v-bind:class="{alert:status!='就绪'}">{{ status }}</p>
       </el-form>
 
       <!-- 登录按钮 -->
       <div class="bottom in">
         <div @click="login" class="login in">登录</div>
+        <div @click="signUp" class="login in">注册</div>
       </div>
     </div>
   </div>
@@ -110,7 +108,10 @@ export default {
         type: "warning"
       });
     },
-
+    // 用户注册
+    signUp() {
+      this.$router.push({ path: "/mobile/signUp" });
+    },
     // 用户登录
     login: function() {
       // 先使页面出于加载状态
@@ -262,7 +263,7 @@ export default {
   display: block;
   width: 80%;
   max-width: 320px;
-  height: 420px;
+  height: 100%;
   padding: 20px;
   background-color: rgba(255, 255, 255, 0);
   z-index: 100;
@@ -304,7 +305,6 @@ export default {
   cursor: text;
   font-size: 14px;
   color: #646257;
-
   border: 1px solid #c8c8c8;
   background-color: hsla(0, 0%, 71%, 0.1);
 }
@@ -319,11 +319,6 @@ export default {
   border-radius: 25px;
   color: #fff;
   background: #ff99ad;
-}
-
-.forgetPassword {
-  color: #c2c2c2;
-  cursor: pointer;
 }
 
 p {
