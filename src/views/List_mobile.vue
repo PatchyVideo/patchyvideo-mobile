@@ -131,7 +131,6 @@ export default {
           query: this.keyword
         }
       }).then(result => {
-        console.log(result);
         this.count = result.data.data.count;
         this.videolist = result.data.data.playlists;
 
