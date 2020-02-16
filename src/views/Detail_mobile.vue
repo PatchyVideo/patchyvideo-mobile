@@ -10,12 +10,7 @@
 <template>
   <div style="height:100%">
     <!-- 页头 -->
-    <div class="head">
-      <div class="goBack" @click="goBack()">
-        <i class="el-icon-back"></i>返回
-      </div>
-      <el-divider direction="vertical"></el-divider>视频详情 - Patchyvideo
-    </div>
+    <PageHead what="视频"></PageHead>
 
     <!-- 页面正文 -->
     <div class="content" v-loading="loading">
@@ -127,6 +122,7 @@
 </template>
 
 <script>
+import PageHead from "../components/PageHead";
 export default {
   data() {
     return {
@@ -195,10 +191,6 @@ export default {
     this.searchVideo();
   },
   methods: {
-    // 返回上一页
-    goBack() {
-      this.$router.go(-1);
-    },
     // 打开原网站
     openOriginalWeb(url) {
       window.open(url, "_self");
@@ -245,25 +237,11 @@ export default {
       }
     }
   },
-  components: {}
+  components: { PageHead }
 };
 </script>
 
 <style scoped>
-.head {
-  position: absolute;
-  top: 0;
-  z-index: 998;
-  width: 100%;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  background-color: #00000002;
-  box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.1);
-}
-.goBack {
-  margin-left: 10px;
-}
 .content {
   z-index: 10;
   margin-top: 37px;

@@ -12,12 +12,7 @@
 <template>
   <div style="height:100%">
     <!-- 页头 -->
-    <div class="head">
-      <div class="goBack" @click="goBack()">
-        <i class="el-icon-back"></i>返回
-      </div>
-      <el-divider direction="vertical"></el-divider>列表详情 - Patchyvideo
-    </div>
+    <PageHead what="列表"></PageHead>
 
     <div class="content" v-loading="loading">
       <!-- 列表封面 -->
@@ -40,7 +35,7 @@
 
       <!-- 视频列表 -->
       <div class="List">
-        <h3 class="listTitle" v-if="videolistVideos.length">共{{videolistVideos.length}}个视频</h3>
+        <h3 class="listTitle" v-if="videolistVideos.length">共{{ maxcount }}个视频</h3>
         <h3 class="noVideo" v-else>竟然连一个视频都没有QAQ</h3>
         <ul class="videolist">
           <li class="list-item" v-for="item in videolistVideos" :key="item._id.$oid">
@@ -72,12 +67,24 @@
       </div>
     </div>
 
+    <!-- 分页器 -->
+    <el-pagination
+      :hide-on-single-page="true"
+      :page-size="20"
+      :pager-count="5"
+      layout="prev, pager, next"
+      :total="maxcount"
+      :current-page="this.page"
+      @current-change="handleCurrentChange"
+    ></el-pagination>
+
     <!-- 回到顶部 -->
     <el-backtop :right="20"></el-backtop>
   </div>
 </template>
 
 <script>
+import PageHead from "../components/PageHead";
 export default {
   data() {
     return {
@@ -141,9 +148,10 @@ export default {
     this.getVideoList();
   },
   methods: {
-    // 返回上一页
-    goBack() {
-      this.$router.go(-1);
+    // 当前播放列表的页面切换的时候调用
+    handleCurrentChange(val) {
+      this.page = val;
+      this.getVideoList();
     },
     // 请求单个播放列表详细数据
     getVideoList() {
@@ -182,26 +190,11 @@ export default {
       });
     }
   },
-  components: {}
+  components: { PageHead }
 };
 </script>
 
 <style scoped>
-.head {
-  position: absolute;
-  top: 0;
-  z-index: 998;
-  width: 100%;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  background-color: #00000002;
-  box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.1);
-}
-.goBack {
-  margin-left: 10px;
-}
-
 .content {
   z-index: 10;
   margin-top: 37px;
