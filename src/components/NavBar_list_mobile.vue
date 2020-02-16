@@ -17,15 +17,16 @@
     <div>
       <!-- 上半部分 -->
       <div class="navTop">
-        <div class="avatar" @click="myInfo = true">
-          <el-avatar :size="30" :src="userAvatar"></el-avatar>
-        </div>
         <div class="navSearch">
           <el-input v-model="iptVal" placeholder="搜索什么播放列表呢" size="mini">
             <el-button slot="append" icon="el-icon-search" @click="gotoHome"></el-button>
           </el-input>
         </div>
+        <div class="avatar" id="avatar" @click="avatar_userMenu = !avatar_userMenu">
+          <el-avatar class="el-dropdown-link" :size="30" :src="userAvatar"></el-avatar>
+        </div>
       </div>
+
       <!-- 下半部分 -->
       <div class="navBottom">
         <div class="routerItem">
@@ -37,6 +38,25 @@
         </div>
       </div>
     </div>
+
+    <!-- 用户下拉菜单 -->
+    <transition name="el-zoom-in-top">
+      <div v-show="avatar_userMenu" class="avatar_userMenu" id="avatar_userMenu">
+        <div v-if="!login">
+          <div class="avatar_logout" @click="dialogVisible = true">
+            <router-link @click.native="toLogin()" to="/mobile/login">
+              <i class="el-icon-user-solid"></i>请先登录
+            </router-link>
+          </div>
+        </div>
+        <div v-else>
+          <div class="avatar_username">{{this.$store.state.username}}</div>
+          <div class="avatar_logout" @click="dialogVisible = true">
+            <i class="el-icon-s-release">退出登录</i>
+          </div>
+        </div>
+      </div>
+    </transition>
 
     <!-- 侧边栏 -->
     <el-drawer
@@ -80,6 +100,8 @@ export default {
       login: false,
       // 侧边栏打开的标志
       myInfo: false,
+      // 用户菜单打开的标志
+      avatar_userMenu: false,
       // 退出登录时退出框处于加载状态的判断
       loading: false,
       // 控制退出登录的弹出框
@@ -109,6 +131,10 @@ export default {
       this.login = true;
     }
     this.getCookie();
+  },
+  mounted() {
+    // 挂载下拉菜单点击其他区域隐藏的逻辑
+    document.body.addEventListener("click", this.hideAvatar_userMenu);
   },
   methods: {
     // 登录跳转
@@ -202,6 +228,20 @@ export default {
         }
       });
     },
+    // 用户下拉菜单的隐藏逻辑
+    hideAvatar_userMenu(event) {
+      var sp = document.getElementById("avatar");
+      if (sp) {
+        if (sp.contains(event.target)) return false;
+      }
+      sp = document.getElementById("avatar_userMenu");
+      if (sp) {
+        if (!sp.contains(event.target)) {
+          this.avatar_userMenu = false;
+        }
+      }
+      return false;
+    },
     // 清除搜索数据
     clearIptVal() {
       this.iptVal = "";
@@ -243,6 +283,31 @@ export default {
 .avatar {
   margin: 7px 5px 5px 5px;
 }
+.avatar_userMenu {
+  border-radius: 4px;
+  position: absolute;
+  top: 40px;
+  right: 0px;
+  background-color: #ffffff;
+  z-index: 998;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+  width: 150px;
+  text-align: center;
+}
+.avatar_username {
+  line-height: 45px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #409eff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.avatar_logout {
+  line-height: 40px;
+  font-size: 18px;
+}
+
 .cancelSearch {
   color: #606266;
 }
@@ -250,6 +315,7 @@ export default {
   height: 30px;
   flex: 0 0 70%;
   margin-right: 5px;
+  margin-left: 5px;
 }
 .navBottom {
   width: 100%;
