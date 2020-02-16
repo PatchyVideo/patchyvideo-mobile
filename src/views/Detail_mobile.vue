@@ -300,9 +300,9 @@ export default {
   margin-bottom: 2px;
 }
 .title_not_open {
-  /* 使文字变为最多显示1行，多余的使用省略号代替 */
+  /* 使文字变为最多显示2行，多余的使用省略号代替 */
   display: -webkit-box;
-  -webkit-line-clamp: 1;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
