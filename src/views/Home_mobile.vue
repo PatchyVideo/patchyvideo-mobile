@@ -290,6 +290,7 @@ export default {
 <style scoped>
 .home {
   width: 100%;
+  padding-top: 64px;
   background-color: rgba(95, 95, 95, 0.014);
 }
 .content {

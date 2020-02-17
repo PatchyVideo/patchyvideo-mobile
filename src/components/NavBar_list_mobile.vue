@@ -268,6 +268,10 @@ export default {
 
 <style scoped>
 .nav {
+  position: fixed;
+  top: 0px;
+  z-index: 998;
+  width: 100%;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
 }
 .navTop {

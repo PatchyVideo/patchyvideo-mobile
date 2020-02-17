@@ -217,7 +217,7 @@ export default {
 
 <style>
 .head {
-  position: absolute;
+  position: fixed;
   top: 0;
   z-index: 998;
   width: 100%;
@@ -225,7 +225,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #00000002;
+  background-color: #fdfdfd;
   box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.1);
 }
 .goBack {
