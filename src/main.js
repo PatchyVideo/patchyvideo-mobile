@@ -31,3 +31,9 @@ var vm = new Vue({
 // 服务器IP：159.65.66.110
 // 用户名：root
 // 密码：patchyvideo-vue2020
+
+// 服务器2号：
+// IPv4：62.171.144.39
+// IPv6：2a02:c207:2034:6604::1
+// 用户名：root
+// 密码：rpHN3QbEaXmBeMgt
