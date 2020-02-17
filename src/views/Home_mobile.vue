@@ -32,19 +32,23 @@
       <h1 v-if="error">{{reason}}</h1>
       <!-- 没有的情况下 -->
       <ul class="videolist" v-else>
-        <li class="list-item" v-for="item in listvideo" :key="item._id.$oid">
+        <li
+          class="list-item"
+          v-for="item in listvideo"
+          :key="item._id.$oid"
+          @click="gotoVideo({ path: '/mobile/detail', query: { id: item._id.$oid } })"
+        >
           <div class="video-thumbnail">
             <img :src="'/images/covers/' + item.item.cover_image" width="120px" height="75px" />
           </div>
           <div class="video-detail">
             <p class="video-detail-title">
-              <router-link
-                :to="{ path: '/mobile/detail', query: { id: item._id.$oid } }"
-              >{{ item.item.title }}</router-link>
+              <a>{{ item.item.title }}</a>
             </p>
             <div class="video-detail-desc">
-              <a :href="item.item.url">
+              <a class="openOriginalSite" :href="item.item.url">
                 <img
+                  class="openOriginalSite"
                   :src="require('../static/img/' + item.item.site + '.png')"
                   width="11px"
                   style="margin-right:2px"
@@ -166,6 +170,14 @@ export default {
       this.page = val;
       this.getListVideo();
     },
+    // 跳转到视频详情
+    gotoVideo(url) {
+      var sp = document.getElementsByClassName("openOriginalSite");
+      if (sp) {
+        if (event.target == sp[0] || event.target == sp[1]) return false;
+      }
+      this.$router.push(url);
+    },
     // 请求播放列表数据
     getListVideo() {
       // 先使页面出于加载状态
@@ -243,6 +255,14 @@ export default {
       this.page = 1;
       this.getListVideo();
     },
+    // 跳转到视频详情
+    gotoVideo(url) {
+      var sp = document.getElementById("openOriginalSite");
+      if (sp) {
+        if (event.target.contains(sp)) return false;
+      }
+      this.$router.push(url);
+    },
     $route(newV, oldV) {
       this.page = 1;
       //监听路由query的值，当query的值为空时，说明默认是首页，调用this.getListVideo获取首页数据并渲染。
@@ -293,6 +313,9 @@ export default {
   border-radius: 8px;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
   display: flex;
+}
+.list-item:active {
+  transform: translate(3px, 3px);
 }
 .video-thumbnail {
   margin-left: 3px;

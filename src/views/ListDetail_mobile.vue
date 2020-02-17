@@ -38,7 +38,12 @@
         <h3 class="listTitle" v-if="videolistVideos.length">共{{ maxcount }}个视频</h3>
         <h3 class="noVideo" v-else>竟然连一个视频都没有QAQ</h3>
         <ul class="videolist">
-          <li class="list-item" v-for="item in videolistVideos" :key="item._id.$oid">
+          <li
+            class="list-item"
+            v-for="item in videolistVideos"
+            :key="item._id.$oid"
+            @click="gotoVideo({ path: '/mobile/detail', query: { id: item._id.$oid } })"
+          >
             <div class="rank">
               <p>{{ item.rank + 1 }}</p>
             </div>
@@ -47,13 +52,12 @@
             </div>
             <div class="video-detail">
               <p class="video-detail-title">
-                <router-link
-                  :to="{ path: '/mobile/detail', query: { id: item._id.$oid } }"
-                >{{ item.item.title }}</router-link>
+                <a>{{ item.item.title }}</a>
               </p>
               <div class="video-detail-desc">
-                <a :href="item.item.url">
+                <a class="openOriginalSite" :href="item.item.url">
                   <img
+                    class="openOriginalSite"
                     :src="require('../static/img/' + item.item.site + '.png')"
                     width="11px"
                     style="margin-right:2px"
@@ -152,6 +156,14 @@ export default {
     handleCurrentChange(val) {
       this.page = val;
       this.getVideoList();
+    },
+    // 跳转到视频详情
+    gotoVideo(url) {
+      var sp = document.getElementsByClassName("openOriginalSite");
+      if (sp) {
+        if (event.target == sp[0] || event.target == sp[1]) return false;
+      }
+      this.$router.push(url);
     },
     // 请求单个播放列表详细数据
     getVideoList() {
@@ -256,6 +268,9 @@ export default {
   border-radius: 8px;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
   display: flex;
+}
+.list-item:active {
+  transform: translate(3px, 3px);
 }
 .rank {
   height: 100%;

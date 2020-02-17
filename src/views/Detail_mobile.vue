@@ -32,7 +32,10 @@
         size="mini"
         type="primary"
         @click="openOriginalWeb(myVideoData.video.item.url)"
-      >打开原网站({{myVideoData.video.item.site}})</el-button>
+      >
+        打开原网站
+        <img :src="imgURL" height="10px" />
+      </el-button>
 
       <!-- 视频内容 -->
       <div class="videoDesc">
@@ -149,7 +152,9 @@ export default {
             // 视频的链接
             url: "",
             //视频封面
-            cover_image: ""
+            cover_image: "",
+            // 视频的来源网站
+            site: ""
           }
         }
       },
@@ -185,6 +190,16 @@ export default {
         (Array(2).join(0) + s).slice(-2) +
         " GMT+8"
       );
+    },
+    imgURL() {
+      if (
+        this.myVideoData.video.item.site == "" ||
+        this.myVideoData.video.item.site == "ipfs"
+      ) {
+        return require("../static/img/defaultAvatar.jpg");
+      }
+      var imgName = this.myVideoData.video.item.site + "_letter";
+      return require("../static/img/" + imgName + ".png");
     }
   },
   created() {

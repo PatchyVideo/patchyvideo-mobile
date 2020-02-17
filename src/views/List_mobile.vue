@@ -28,15 +28,18 @@
       </div>
       <!-- 播放列表正文 -->
       <ul class="videolist">
-        <li class="list-item" v-for="item in videolist" :key="item._id.$oid">
+        <li
+          class="list-item"
+          v-for="item in videolist"
+          :key="item._id.$oid"
+          @click="gotoList({ path: '/mobile/listdetail', query: { id: item._id.$oid } })"
+        >
           <div class="video-thumbnail">
             <img :src="'/images/covers/'+item.cover" width="120px" height="75px" />
           </div>
           <div class="video-detail">
             <p class="video-detail-title">
-              <router-link
-                :to="{ path: '/mobile/listdetail', query: { id: item._id.$oid } }"
-              >{{ item.title.english }}</router-link>
+              <a>{{ item.title.english }}</a>
             </p>
             <div class="video-detail-desc">
               <p>共{{ item.videos }}个视频</p>
@@ -113,6 +116,14 @@ export default {
     handleCurrentChange(val) {
       this.page = val;
       this.searchList();
+    },
+    // 跳转到列表详情
+    gotoList(url) {
+      var sp = document.getElementsByClassName("openOriginalSite");
+      if (sp) {
+        if (event.target == sp[0] || event.target == sp[1]) return false;
+      }
+      this.$router.push(url);
     },
     // 搜索列表
     searchList() {
@@ -198,6 +209,9 @@ export default {
   border-radius: 8px;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
   display: flex;
+}
+.list-item:active {
+  transform: translate(3px, 3px);
 }
 .video-thumbnail {
   margin-left: 3px;
