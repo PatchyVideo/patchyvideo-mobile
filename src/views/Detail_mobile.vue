@@ -33,8 +33,8 @@
         type="primary"
         @click="openOriginalWeb(myVideoData.video.item.url)"
       >
+        <img style="transform: translate(1px, 1px);" :src="imgURL" height="12px" />
         打开原网站
-        <img :src="imgURL" height="10px" />
       </el-button>
 
       <!-- 视频内容 -->
@@ -47,7 +47,7 @@
           <p style="font-weight: 600;">{{ videodate }}</p>
           <!-- 视频详情 -->
           <p class="desc_not_open desc">{{myVideoData.video.item.desc}}</p>
-          <p class="descOpen" @click="descOpen=true">点我展开</p>
+          <p class="descOpen" @click="descOpen=true">展开全部</p>
         </div>
         <!-- 展开的样式 -->
         <div v-else>
@@ -57,7 +57,7 @@
           <p style="font-weight: 600;">{{ videodate }}</p>
           <!-- 视频详情 -->
           <p class="desc">{{myVideoData.video.item.desc}}</p>
-          <p class="descOpen" @click="descOpen=false">点我收起</p>
+          <p class="descOpen" @click="descOpen=false">收起</p>
         </div>
       </div>
 
