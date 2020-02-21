@@ -212,17 +212,23 @@ export default {
         data: {}
       }).then(result => {
         if (result.data.data == "UNAUTHORISED_OPERATION" && this.getCookie()) {
-          this.login = false;
-          // 清除所有session值(退出登录)
-          sessionStorage.clear();
-          // 清除用户名
-          this.$store.commit("clearUserName");
-          // 清除本地数据
-          localStorage.setItem("username", "");
-          // 清除cookie
-          this.clearCookie();
-          // 改变用户登录状态
-          this.$store.commit("changeifTruelyLogin", "2");
+          this.axios({
+            method: "post",
+            url: "/be/logout.do",
+            data: {}
+          }).then(result => {
+            this.login = false;
+            // 清除所有session值(退出登录)
+            sessionStorage.clear();
+            // 清除用户名
+            this.$store.commit("clearUserName");
+            // 清除本地数据
+            localStorage.setItem("username", "");
+            // 清除cookie
+            this.clearCookie();
+            // 改变用户登录状态
+            this.$store.commit("changeifTruelyLogin", "2");
+          });
         } else {
           this.$store.commit("changeifTruelyLogin", "1");
         }
