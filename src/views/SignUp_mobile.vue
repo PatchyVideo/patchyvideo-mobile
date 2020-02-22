@@ -260,7 +260,7 @@ export default {
   position: absolute;
   width: 100%;
   height: 100%;
-  background: url("../static/img/44001544.png");
+  /* background: url("../static/img/44001544.png"); */
   background-size: cover;
   background-attachment: fixed;
   background-position: center center;

@@ -240,7 +240,7 @@ export default {
   position: absolute;
   width: 100%;
   height: 100%;
-  background: url("../static/img/53270459.jpg");
+  /* background: url("../static/img/53270459.jpg"); */
   background-size: cover;
   background-attachment: fixed;
   background-position: center center;
