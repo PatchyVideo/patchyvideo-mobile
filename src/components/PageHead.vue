@@ -45,7 +45,13 @@
     </transition>
 
     <!-- 退出登录的弹出框 -->
-    <el-dialog title="提示" :visible.sync="dialogVisible" width="90%" v-loading="loading">
+    <el-dialog
+      :modal="false"
+      title="提示"
+      :visible.sync="dialogVisible"
+      width="90%"
+      v-loading="loading"
+    >
       <p>你确定要退出登录吗?</p>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
