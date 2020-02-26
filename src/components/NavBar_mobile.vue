@@ -27,7 +27,7 @@
             @select="handleSelect"
             placeholder="想看什么视频呢"
             size="mini"
-            @focus="showHotTags=true"
+            @focus="showHotTags = true"
           >
             <el-button slot="append" icon="el-icon-search" @click="gotoHome"></el-button>
             <template slot-scope="{ item }">
@@ -35,20 +35,20 @@
                 <div
                   class="name"
                   v-bind:class="{
-                      Copyright: item.cat == 2,
-                      Language: item.cat == 5,
-                      Character: item.cat == 1,
-                      Author: item.cat == 3,
-                      General: item.cat == 0,
-                      Meta: item.cat == 4
-                    }"
+                    Copyright: item.cat == 2,
+                    Language: item.cat == 5,
+                    Character: item.cat == 1,
+                    Author: item.cat == 3,
+                    General: item.cat == 0,
+                    Meta: item.cat == 4
+                  }"
                 >{{ item.tag }}</div>
                 <div class="addr" v-if="item.cnt != null">{{ item.cnt }}</div>
               </div>
             </template>
           </el-autocomplete>
         </div>
-        <div v-show="showHotTags" @click="showHotTags=false" class="cancelSearch">取消</div>
+        <div v-show="showHotTags" @click="showHotTags = false" class="cancelSearch">取消</div>
         <div class="avatar" id="avatar" @click="avatar_userMenu = !avatar_userMenu">
           <el-avatar :size="30" :src="userAvatar"></el-avatar>
         </div>
@@ -85,7 +85,8 @@
               Character: val == 'Character',
               Author: val == 'Author',
               General: val == 'General',
-              Meta: val == 'Meta'
+              Meta: val == 'Meta',
+              Soundtrack: val == 'Soundtrack'
             }"
             @click="searchTags(key)"
           >{{ key }}</p>
@@ -104,7 +105,7 @@
           </div>
         </div>
         <div v-else>
-          <div class="avatar_username">{{this.$store.state.username}}</div>
+          <div class="avatar_username">{{ this.$store.state.username }}</div>
           <div class="avatar_logout" @click="dialogVisible = true">
             <i class="el-icon-s-release">退出登录</i>
           </div>
@@ -128,7 +129,7 @@
       <!-- 登录状态下 -->
       <div v-else>
         <el-avatar :size="70" :src="userAvatar" class="drawer_avatar"></el-avatar>
-        <p class="drawer_username">{{this.$store.state.username}}</p>
+        <p class="drawer_username">{{ this.$store.state.username }}</p>
         <p class="drawerItem" @click="dialogVisible = true">退出登录</p>
       </div>
     </el-drawer>
@@ -638,5 +639,8 @@ export default {
 }
 .Meta {
   color: #f80;
+}
+.Soundtrack {
+  color: #ff7792;
 }
 </style>
