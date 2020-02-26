@@ -15,9 +15,9 @@
     <!-- 登录框正文 -->
     <div class="w">
       <!-- 标题 -->
-      <router-link class="title" to="/mobile/home">PatchyVideo</router-link>
+      <router-link class="title" to="/home">PatchyVideo</router-link>
       <div class="top in">
-        <router-link to="/mobile/login">登录</router-link>
+        <router-link to="/login">登录</router-link>
       </div>
 
       <!-- 输入账号和密码的框 -->
@@ -109,7 +109,7 @@ export default {
     },
     // 用户注册
     signUp() {
-      this.$router.push({ path: "/mobile/signUp" });
+      this.$router.push({ path: "/signUp" });
     },
     // 用户登录
     login: function() {
@@ -180,7 +180,7 @@ export default {
                       // 如果是从其他地方跳转到本界面，回到home页面
                       else {
                         this.$store.commit("changeifRouter", "2");
-                        this.$router.push({ path: "/mobile/home" });
+                        this.$router.push({ path: "/home" });
                       }
                     } else {
                       this.open3();

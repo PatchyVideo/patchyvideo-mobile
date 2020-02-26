@@ -42,22 +42,22 @@
         <!-- 没展开的样式 -->
         <div v-if="!descOpen">
           <!-- 视频标题 -->
-          <h3 class="title_not_open">{{myVideoData.video.item.title}}</h3>
+          <h3 class="title_not_open">{{ myVideoData.video.item.title }}</h3>
           <!-- 视频上传日期 -->
           <p style="font-weight: 600;">{{ videodate }}</p>
           <!-- 视频详情 -->
-          <p class="desc_not_open desc">{{myVideoData.video.item.desc}}</p>
-          <p class="descOpen" @click="descOpen=true">展开全部</p>
+          <p class="desc_not_open desc">{{ myVideoData.video.item.desc }}</p>
+          <p class="descOpen" @click="descOpen = true">展开全部</p>
         </div>
         <!-- 展开的样式 -->
         <div v-else>
           <!-- 视频标题 -->
-          <h3>{{myVideoData.video.item.title}}</h3>
+          <h3>{{ myVideoData.video.item.title }}</h3>
           <!-- 视频上传日期 -->
           <p style="font-weight: 600;">{{ videodate }}</p>
           <!-- 视频详情 -->
-          <p class="desc">{{myVideoData.video.item.desc}}</p>
-          <p class="descOpen" @click="descOpen=false">收起</p>
+          <p class="desc">{{ myVideoData.video.item.desc }}</p>
+          <p class="descOpen" @click="descOpen = false">收起</p>
         </div>
       </div>
 
@@ -71,7 +71,7 @@
           v-for="item in myVideoData.tags"
           :key="item"
           @click="gotoHome(item)"
-        >{{item}}</el-tag>
+        >{{ item }}</el-tag>
       </div>
 
       <!-- 视频副本 -->
@@ -85,7 +85,7 @@
             style="margin-right:2px"
           />
           <router-link
-            :to="{ path: '/mobile/detail', query: { id: item._id.$oid } }"
+            :to="{ path: '/video', query: { id: item._id.$oid } }"
             tag="a"
           >{{ item.item.title }}</router-link>
         </ul>
@@ -102,18 +102,18 @@
         >
           <router-link
             v-if="item.prev != ''"
-            :to="{ path: '/mobile/detail', query: { id: item.prev } }"
+            :to="{ path: '/video', query: { id: item.prev } }"
             tag="a"
           >【前一篇】</router-link>
           <span v-else>【没有啦】</span>
           <router-link
-            :to="{ path: '/mobile/listdetail', query: { id: item._id.$oid } }"
+            :to="{ path: '/listsdetail', query: { id: item._id.$oid } }"
             tag="a"
             class="listItemTitle"
           >{{ item.title.english }}</router-link>
           <router-link
             v-if="item.next != ''"
-            :to="{ path: '/mobile/detail', query: { id: item.next } }"
+            :to="{ path: '/video', query: { id: item.next } }"
             tag="a"
             style="float:right"
           >【后一篇】</router-link>
@@ -213,7 +213,7 @@ export default {
     // 点击标签跳转到home页面显示搜索结果
     gotoHome(query) {
       this.$router
-        .push({ path: "/mobile/home", query: { keyword: query } })
+        .push({ path: "/home", query: { keyword: query } })
         .catch(err => {
           return err;
         });

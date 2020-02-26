@@ -52,7 +52,7 @@ const routes = [
   {
     path: "/",
     redirect() {
-      return "/mobile/home";
+      return "/home";
     }
   },
   {
@@ -62,27 +62,27 @@ const routes = [
   },
   // 下面是移动端页面
   {
-    path: "/mobile/home",
+    path: "/home",
     component: Home_mobile
   },
   {
-    path: "/mobile/detail",
+    path: "/video",
     component: Detail_mobile
   },
   {
-    path: "/mobile/list",
+    path: "/lists",
     component: List_mobile
   },
   {
-    path: "/mobile/listdetail",
+    path: "/listsdetail",
     component: ListDetail_mobile
   },
   {
-    path: "/mobile/login",
+    path: "/login",
     component: Login_mobile
   },
   {
-    path: "/mobile/signUp",
+    path: "/signUp",
     component: SignUp_mobile
   }
 ];

@@ -15,10 +15,10 @@
     <div class="w">
       <!-- 标题 -->
       <h1>
-        <router-link class="title" to="/mobile/home">PatchyVideo</router-link>
+        <router-link class="title" to="/home">PatchyVideo</router-link>
       </h1>
       <div class="top in">
-        <router-link to="/mobile/signUp">注册</router-link>
+        <router-link to="/signUp">注册</router-link>
       </div>
 
       <!-- 输入账号和密码的框 -->
@@ -210,7 +210,7 @@ export default {
                   // 加载结束,加载动画消失
                   this.loading = false;
                   // 退回到登录界面
-                  this.$router.push("/mobile/login");
+                  this.$router.push("/login");
                 }
                 // 用户名已存在的情况
                 else {

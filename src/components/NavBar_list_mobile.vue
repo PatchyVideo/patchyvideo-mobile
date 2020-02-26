@@ -34,7 +34,7 @@
         </div>
         <el-divider direction="vertical"></el-divider>
         <div class="routerItem">
-          <router-link to="/mobile/list" class="routerItem_active">播放列表</router-link>
+          <router-link to="/lists" class="routerItem_active">播放列表</router-link>
         </div>
       </div>
     </div>
@@ -44,7 +44,7 @@
       <div v-show="avatar_userMenu" class="avatar_userMenu" id="avatar_userMenu">
         <div v-if="!login">
           <div class="avatar_logout" @click="dialogVisible = true">
-            <router-link @click.native="toLogin()" to="/mobile/login">
+            <router-link @click.native="toLogin()" to="/login">
               <i class="el-icon-user-solid"></i>请先登录
             </router-link>
           </div>
@@ -69,7 +69,7 @@
       <!-- 未登录状态下 -->
       <div v-if="!login">
         <el-avatar :size="70" :src="userAvatar" class="drawer_avatar"></el-avatar>
-        <router-link class="drawer_username" @click.native="toLogin()" to="/mobile/login">请先登录</router-link>
+        <router-link class="drawer_username" @click.native="toLogin()" to="/login">请先登录</router-link>
       </div>
       <!-- 登录状态下 -->
       <div v-else>
@@ -263,14 +263,14 @@ export default {
       this.showHotTags = false;
       if (this.iptVal != "") {
         this.$router
-          .push({ path: "/mobile/list", query: { keyword: this.iptVal } })
+          .push({ path: "/lists", query: { keyword: this.iptVal } })
           .catch(err => {
             return err;
           });
       } else {
         // 对于在home页面时无参数搜索的兼容
         if (JSON.stringify(this.$route.query) == "{}") return;
-        this.$router.push({ path: "/mobile/home" });
+        this.$router.push({ path: "/home" });
       }
     }
   },

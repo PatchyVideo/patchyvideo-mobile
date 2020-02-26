@@ -32,7 +32,7 @@
           class="list-item"
           v-for="item in videolist"
           :key="item._id.$oid"
-          @click="gotoList({ path: '/mobile/listdetail', query: { id: item._id.$oid } })"
+          @click="gotoList({ path: '/listsdetail', query: { id: item._id.$oid } })"
         >
           <div class="video-thumbnail">
             <img :src="'/images/covers/'+item.cover" width="120px" height="75px" />

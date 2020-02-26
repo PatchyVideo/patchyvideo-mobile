@@ -30,7 +30,7 @@
       <div v-show="avatar_userMenu" class="avatar_userMenu" id="avatar_userMenu">
         <div v-if="!login">
           <div class="avatar_logout" @click="dialogVisible = true">
-            <router-link @click.native="toLogin()" to="/mobile/login">
+            <router-link @click.native="toLogin()" to="/login">
               <i class="el-icon-user-solid"></i>请先登录
             </router-link>
           </div>

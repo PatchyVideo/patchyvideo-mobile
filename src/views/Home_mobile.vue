@@ -18,7 +18,12 @@
     <div class="content" v-loading="loading">
       <!-- 排序方式选择 -->
       <div class="selectBox">
-        <el-select size="mini" style="width:100%" v-model="couponSelected" placeholder="请选择">
+        <el-select
+          size="mini"
+          style="width:100%"
+          v-model="couponSelected"
+          placeholder="请选择"
+        >
           <el-option
             v-for="item in options"
             :key="item.value"
@@ -29,17 +34,21 @@
       </div>
       <!-- 播放列表正文 -->
       <!-- 搜索关键字有错误的情况下 -->
-      <h1 v-if="error">{{reason}}</h1>
+      <h1 v-if="error">{{ reason }}</h1>
       <!-- 没有的情况下 -->
       <ul class="videolist" v-else>
         <li
           class="list-item"
           v-for="item in listvideo"
           :key="item._id.$oid"
-          @click="gotoVideo({ path: '/mobile/detail', query: { id: item._id.$oid } })"
+          @click="gotoVideo({ path: '/video', query: { id: item._id.$oid } })"
         >
           <div class="video-thumbnail">
-            <img :src="'/images/covers/' + item.item.cover_image" width="120px" height="75px" />
+            <img
+              :src="'/images/covers/' + item.item.cover_image"
+              width="120px"
+              height="75px"
+            />
           </div>
           <div class="video-detail">
             <p class="video-detail-title">
@@ -54,7 +63,9 @@
                   style="margin-right:2px"
                 />打开原网址
               </a>
-              <p style="margin-top:5px">{{ videodate(item.item.upload_time.$date) }}</p>
+              <p style="margin-top:5px">
+                {{ videodate(item.item.upload_time.$date) }}
+              </p>
             </div>
           </div>
         </li>

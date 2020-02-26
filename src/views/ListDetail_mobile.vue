@@ -16,7 +16,7 @@
 
     <div class="content" v-loading="loading">
       <!-- 列表封面 -->
-      <el-image :src="'/images/covers/' +videolistDetail.playlist.cover">
+      <el-image :src="'/images/covers/' + videolistDetail.playlist.cover">
         <div slot="placeholder" class="image-slot">
           加载中
           <span class="dot">...</span>
@@ -27,28 +27,34 @@
       <div class="videoDesc">
         <div>
           <!-- 列表标题 -->
-          <h3>{{videolistName}}</h3>
+          <h3>{{ videolistName }}</h3>
           <!-- 列表详情 -->
-          <p class="desc">{{videolistDesc}}</p>
+          <p class="desc">{{ videolistDesc }}</p>
         </div>
       </div>
 
       <!-- 视频列表 -->
       <div class="List">
-        <h3 class="listTitle" v-if="videolistVideos.length">共{{ maxcount }}个视频</h3>
+        <h3 class="listTitle" v-if="videolistVideos.length">
+          共{{ maxcount }}个视频
+        </h3>
         <h3 class="noVideo" v-else>竟然连一个视频都没有QAQ</h3>
         <ul class="videolist">
           <li
             class="list-item"
             v-for="item in videolistVideos"
             :key="item._id.$oid"
-            @click="gotoVideo({ path: '/mobile/detail', query: { id: item._id.$oid } })"
+            @click="gotoVideo({ path: '/video', query: { id: item._id.$oid } })"
           >
             <div class="rank">
               <p>{{ item.rank + 1 }}</p>
             </div>
             <div class="video-thumbnail">
-              <img :src="'/images/covers/' + item.item.cover_image" width="120px" height="75px" />
+              <img
+                :src="'/images/covers/' + item.item.cover_image"
+                width="120px"
+                height="75px"
+              />
             </div>
             <div class="video-detail">
               <p class="video-detail-title">
@@ -63,7 +69,9 @@
                     style="margin-right:2px"
                   />打开原网址
                 </a>
-                <p style="margin-top:5px">{{ videodate(item.item.upload_time.$date) }}</p>
+                <p style="margin-top:5px">
+                  {{ videodate(item.item.upload_time.$date) }}
+                </p>
               </div>
             </div>
           </li>
