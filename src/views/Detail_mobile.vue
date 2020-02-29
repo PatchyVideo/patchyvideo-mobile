@@ -76,39 +76,37 @@
 
       <!-- 视频副本 -->
       <div class="copies">
-        <h3 class="tagTitle">副本</h3> 
+        <h3 class="tagTitle">副本</h3>
         <p class="copyItem" v-if="myVideoData.copies.length == 0">
-            此视频不存在副本
-            <router-link
-                :to="{ path: './postvideo', query: { copy: this.pid } }"
-                tag="a"
-                v-if="isLogin == true"
-              >
-                <el-button type="text">[添加副本]</el-button>
-            </router-link>
+          此视频不存在副本
+          <router-link
+            :to="{ path: './postvideo', query: { copy: this.pid } }"
+            tag="a"
+            v-if="isLogin == true"
+          >
+            <el-button type="text">[添加副本]</el-button>
+          </router-link>
         </p>
-        <p v-else>
-              此视频有{{ myVideoData.copies.length }}个副本
-        </p>
+        <p v-else>此视频有{{ myVideoData.copies.length }}个副本</p>
         <div v-for="(value, key, index) in myVideoData.copies_by_repost_type" :key="index">
-            <h3 v-if="key =='official'">原始发布</h3>
-            <h3 v-if="key =='official_repost'">官方再发布</h3>
-            <h3 v-if="key =='authorized_translation'">授权翻译</h3>
-            <h3 v-if="key =='authorized_repost'">授权转载</h3>
-            <h3 v-if="key =='translation'">自发翻译</h3>
-            <h3 v-if="key =='repost'">自发搬运</h3>
-            <h3 v-if="key =='unknown'">其他</h3>
-            <ul class="copyItem" v-for="item in value" :key="item._id.$oid">
-                <img
-                    :src="require('../static/img/' + item.item.site + '.png')"
-                    width="13px"
-                    style="margin-right:2px"
-                />
-                <router-link
-                    :to="{ path: '/video', query: { id: item._id.$oid } }"
-                    tag="a"
-                >{{ item.item.title }}</router-link>
-            </ul>
+          <h3 v-if="key =='official'">原始发布</h3>
+          <h3 v-if="key =='official_repost'">官方再发布</h3>
+          <h3 v-if="key =='authorized_translation'">授权翻译</h3>
+          <h3 v-if="key =='authorized_repost'">授权转载</h3>
+          <h3 v-if="key =='translation'">自发翻译</h3>
+          <h3 v-if="key =='repost'">自发搬运</h3>
+          <h3 v-if="key =='unknown'">其他</h3>
+          <ul class="copyItem" v-for="item in value" :key="item._id.$oid">
+            <img
+              :src="require('../static/img/' + item.item.site + '.png')"
+              width="13px"
+              style="margin-right:2px"
+            />
+            <router-link
+              :to="{ path: '/video', query: { id: item._id.$oid } }"
+              tag="a"
+            >{{ item.item.title }}</router-link>
+          </ul>
         </div>
       </div>
 
@@ -283,7 +281,10 @@ export default {
       this.axios({
         method: "post",
         url: "be/getvideo.do",
-        data: { vid: this.$route.query.id }
+        data: {
+          vid: this.$route.query.id,
+          lang: "CHS"
+        }
       })
         .then(result => {
           this.myVideoData = result.data.data;
