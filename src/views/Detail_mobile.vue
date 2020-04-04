@@ -260,6 +260,10 @@ export default {
   created() {
     this.searchVideo();
   },
+  mounted() {
+    // 防止B站侦测ferrer导致视频链接跳转出现404
+    $("head").append('<meta name="referrer" content="never">');
+  },
   methods: {
     // 打开原网站
     openOriginalWeb(url) {
