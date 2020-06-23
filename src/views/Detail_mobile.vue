@@ -33,7 +33,11 @@
         type="primary"
         @click="openOriginalWeb(myVideoData.video.item.url)"
       >
-        <img style="transform: translate(1px, 1px);" :src="imgURL" height="12px" />
+        <img
+          style="transform: translate(1px, 1px);"
+          :src="imgURL"
+          height="12px"
+        />
         打开原网站
       </el-button>
 
@@ -71,7 +75,8 @@
           v-for="item in myVideoData.tags"
           :key="item"
           @click="gotoHome(item)"
-        >{{ item }}</el-tag>
+          >{{ item }}</el-tag
+        >
       </div>
 
       <!-- 视频副本 -->
@@ -79,23 +84,19 @@
         <h3 class="tagTitle">副本</h3>
         <p class="copyItem" v-if="myVideoData.copies.length == 0">
           此视频不存在副本
-          <router-link
-            :to="{ path: './postvideo', query: { copy: this.pid } }"
-            tag="a"
-            v-if="isLogin == true"
-          >
-            <el-button type="text">[添加副本]</el-button>
-          </router-link>
         </p>
         <p v-else>此视频有{{ myVideoData.copies.length }}个副本</p>
-        <div v-for="(value, key, index) in myVideoData.copies_by_repost_type" :key="index">
-          <h3 v-if="key =='official'">原始发布</h3>
-          <h3 v-if="key =='official_repost'">官方再发布</h3>
-          <h3 v-if="key =='authorized_translation'">授权翻译</h3>
-          <h3 v-if="key =='authorized_repost'">授权转载</h3>
-          <h3 v-if="key =='translation'">自发翻译</h3>
-          <h3 v-if="key =='repost'">自发搬运</h3>
-          <h3 v-if="key =='unknown'">其他</h3>
+        <div
+          v-for="(value, key, index) in myVideoData.copies_by_repost_type"
+          :key="index"
+        >
+          <h3 v-if="key == 'official'">原始发布</h3>
+          <h3 v-if="key == 'official_repost'">官方再发布</h3>
+          <h3 v-if="key == 'authorized_translation'">授权翻译</h3>
+          <h3 v-if="key == 'authorized_repost'">授权转载</h3>
+          <h3 v-if="key == 'translation'">自发翻译</h3>
+          <h3 v-if="key == 'repost'">自发搬运</h3>
+          <h3 v-if="key == 'unknown'">其他</h3>
           <ul class="copyItem" v-for="item in value" :key="item._id.$oid">
             <img
               :src="require('../static/img/' + item.item.site + '.png')"
@@ -105,7 +106,8 @@
             <router-link
               :to="{ path: '/video', query: { id: item._id.$oid } }"
               tag="a"
-            >{{ item.item.title }}</router-link>
+              >{{ item.item.title }}</router-link
+            >
           </ul>
         </div>
       </div>
@@ -113,7 +115,9 @@
       <!-- 播放列表 -->
       <div class="lists">
         <h3 class="tagTitle">播放列表</h3>
-        <p class="listItem" v-if="myVideoData.playlists.length == 0">本视频不包含于任何播放列表中</p>
+        <p class="listItem" v-if="myVideoData.playlists.length == 0">
+          本视频不包含于任何播放列表中
+        </p>
         <ul
           class="listItem listItemDetail"
           v-for="item in myVideoData.playlists"
@@ -123,19 +127,22 @@
             v-if="item.prev != ''"
             :to="{ path: '/video', query: { id: item.prev } }"
             tag="a"
-          >【前一篇】</router-link>
+            >【前一篇】</router-link
+          >
           <span v-else>【没有啦】</span>
           <router-link
             :to="{ path: '/listsdetail', query: { id: item._id.$oid } }"
             tag="a"
             class="listItemTitle"
-          >{{ item.title.english }}</router-link>
+            >{{ item.item.title }}</router-link
+          >
           <router-link
             v-if="item.next != ''"
             :to="{ path: '/video', query: { id: item.next } }"
             tag="a"
             style="float:right"
-          >【后一篇】</router-link>
+            >【后一篇】</router-link
+          >
           <span v-else style="float:right">【没有啦】</span>
         </ul>
       </div>
@@ -166,21 +173,21 @@ export default {
             desc: "",
             // 视频上传时间(时间戳对象)
             upload_time: {
-              $date: ""
+              $date: "",
             },
             // 视频的链接
             url: "",
             //视频封面
             cover_image: "",
             // 视频的来源网站
-            site: ""
-          }
-        }
+            site: "",
+          },
+        },
       },
       // 视频列表是否属于加载状态的判断
       loading: false,
       // 视频详情是否打开的判断
-      descOpen: false
+      descOpen: false,
     };
   },
   computed: {
@@ -255,7 +262,7 @@ export default {
       } else {
         return false;
       }
-    }
+    },
   },
   created() {
     this.searchVideo();
@@ -273,7 +280,7 @@ export default {
     gotoHome(query) {
       this.$router
         .push({ path: "/home", query: { keyword: query } })
-        .catch(err => {
+        .catch((err) => {
           return err;
         });
     },
@@ -287,10 +294,10 @@ export default {
         url: "be/getvideo.do",
         data: {
           vid: this.$route.query.id,
-          lang: "CHS"
-        }
+          lang: "CHS",
+        },
       })
-        .then(result => {
+        .then((result) => {
           this.myVideoData = result.data.data;
 
           // 修改网站标题
@@ -301,10 +308,10 @@ export default {
           // 加载结束,加载动画消失
           this.loading = false;
         })
-        .catch(error => {
+        .catch((error) => {
           this.$router.push({ path: "/404" });
         });
-    }
+    },
   },
   watch: {
     // 监控视频ID变化情况
@@ -312,9 +319,9 @@ export default {
       if (newV.query.id != oldV.query.id) {
         this.searchVideo();
       }
-    }
+    },
   },
-  components: { PageHead }
+  components: { PageHead },
 };
 </script>
 
@@ -361,10 +368,6 @@ export default {
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-.desc {
-  /* width: 90%;
-  margin: 0 auto; */
 }
 .desc_not_open {
   /* 使文字变为最多显示2行，多余的使用省略号代替 */

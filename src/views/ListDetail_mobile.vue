@@ -16,7 +16,7 @@
 
     <div class="content" v-loading="loading">
       <!-- 列表封面 -->
-      <el-image :src="'/images/covers/' + videolistDetail.playlist.cover">
+      <el-image :src="'/images/covers/' + videolistDetail.playlist.item.cover">
         <div slot="placeholder" class="image-slot">
           加载中
           <span class="dot">...</span>
@@ -103,8 +103,10 @@ export default {
       // 视频列表的详细信息
       videolistDetail: {
         playlist: {
-          cover: ""
-        }
+          item: {
+            cover: "",
+          },
+        },
       },
       // 视频列表的名称
       videolistName: "",
@@ -123,7 +125,7 @@ export default {
       // 视频列表是否属于加载状态的判断
       loading: false,
       // 视频详情是否打开的判断
-      descOpen: false
+      descOpen: false,
     };
   },
   computed: {
@@ -154,7 +156,7 @@ export default {
           (Array(2).join(0) + s).slice(-2)
         );
       };
-    }
+    },
   },
   created() {
     this.getVideoList();
@@ -181,8 +183,8 @@ export default {
       this.axios({
         method: "post",
         url: "be/lists/get_playlist.do",
-        data: { page: this.page, page_size: 20, pid: this.$route.query.id }
-      }).then(result => {
+        data: { page: this.page, page_size: 20, pid: this.$route.query.id },
+      }).then((result) => {
         // 请求失败的情况
         if (result.data.status == "FAILED") {
           // 列表不存在的情况,跳转到404页面
@@ -193,8 +195,8 @@ export default {
         // 页面不存在的情况下
         this.videolistDetail = result.data.data;
         // 必须是登录且发来的数据是可编辑的才渲染编辑组件
-        this.videolistName = this.videolistDetail.playlist.title.english;
-        this.videolistDesc = this.videolistDetail.playlist.desc.english;
+        this.videolistName = this.videolistDetail.playlist.item.title;
+        this.videolistDesc = this.videolistDetail.playlist.item.desc;
         this.videolistVideos = this.videolistDetail.videos;
         this.maxcount = result.data.data.count;
         this.maxpage = result.data.data.page_count;
@@ -208,9 +210,9 @@ export default {
           $("html").animate({ scrollTop: 0 }, 100);
         }
       });
-    }
+    },
   },
-  components: { PageHead }
+  components: { PageHead },
 };
 </script>
 
@@ -301,7 +303,7 @@ export default {
   text-align: left;
 }
 .video-detail-title {
-  height: 32px;
+  height: 30px;
   font-size: 15px;
   font-weight: 800;
   line-height: 16px;

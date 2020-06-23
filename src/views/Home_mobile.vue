@@ -109,7 +109,7 @@ export default {
         { value: "latest", label: "发布时间正序" },
         { value: "oldest", label: "发布时间倒序" },
         { value: "video_latest", label: "原视频上传时间正序" },
-        { value: "video_oldest", label: "原视频上传时间倒序" }
+        { value: "video_oldest", label: "原视频上传时间倒序" },
       ],
       // 当前视频列表的排列顺序
       couponSelected: "latest",
@@ -120,7 +120,7 @@ export default {
       // 搜索内容是否有问题的判断
       error: false,
       // 错误原因
-      reason: ""
+      reason: "",
     };
   },
   computed: {
@@ -159,7 +159,7 @@ export default {
       } else {
         return "";
       }
-    }
+    },
   },
   created() {
     // 初始化页面名为home
@@ -204,9 +204,9 @@ export default {
             page: this.page,
             page_size: this.page_size,
             order: this.couponSelected,
-            query: this.query
-          }
-        }).then(result => {
+            query: this.query,
+          },
+        }).then((result) => {
           if (result.data.status == "SUCCEED") {
             this.error = false;
             this.listvideo = result.data.data.videos;
@@ -243,9 +243,9 @@ export default {
           data: {
             page: this.page,
             page_size: this.page_size,
-            order: this.couponSelected
-          }
-        }).then(result => {
+            order: this.couponSelected,
+          },
+        }).then((result) => {
           this.listvideo = result.data.data.videos;
           this.count = result.data.data.count;
           this.tags = result.data.data.tags;
@@ -259,7 +259,7 @@ export default {
           }
         });
       }
-    }
+    },
   },
   watch: {
     couponSelected() {
@@ -292,9 +292,9 @@ export default {
         this.getListVideo();
         return;
       }
-    }
+    },
   },
-  components: { NavBar }
+  components: { NavBar },
 };
 </script>
 
@@ -340,7 +340,7 @@ export default {
   text-align: left;
 }
 .video-detail-title {
-  height: 32px;
+  height: 30px;
   font-size: 15px;
   font-weight: 800;
   line-height: 16px;

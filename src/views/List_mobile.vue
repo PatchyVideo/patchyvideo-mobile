@@ -17,7 +17,12 @@
     <div class="content" v-loading="loading">
       <!-- 排序方式选择 -->
       <div class="selectBox">
-        <el-select size="mini" style="width:100%" v-model="couponSelected" placeholder="请选择">
+        <el-select
+          size="mini"
+          style="width:100%"
+          v-model="couponSelected"
+          placeholder="请选择"
+        >
           <el-option
             v-for="item in options"
             :key="item.value"
@@ -32,17 +37,23 @@
           class="list-item"
           v-for="item in videolist"
           :key="item._id.$oid"
-          @click="gotoList({ path: '/listsdetail', query: { id: item._id.$oid } })"
+          @click="
+            gotoList({ path: '/listsdetail', query: { id: item._id.$oid } })
+          "
         >
           <div class="video-thumbnail">
-            <img :src="'/images/covers/'+item.cover" width="120px" height="75px" />
+            <img
+              :src="'/images/covers/' + item.item.cover"
+              width="120px"
+              height="75px"
+            />
           </div>
           <div class="video-detail">
             <p class="video-detail-title">
-              <a>{{ item.title.english }}</a>
+              <a>{{ item.item.title }}</a>
             </p>
             <div class="video-detail-desc">
-              <p>共{{ item.videos }}个视频</p>
+              <p>共{{ item.item.videos }}个视频</p>
             </div>
           </div>
         </li>
@@ -84,12 +95,12 @@ export default {
       options: [
         { value: "latest", label: "时间正序" },
         { value: "oldest", label: "时间倒序" },
-        { value: "last_modified", label: "最新修改" }
+        { value: "last_modified", label: "最新修改" },
       ],
       // 当前视频列表的排列顺序
       couponSelected: "latest",
       // 视频列表是否属于加载状态的判断
-      loading: false
+      loading: false,
     };
   },
   computed: {
@@ -100,7 +111,7 @@ export default {
       } else {
         return "";
       }
-    }
+    },
   },
   created() {
     // 初始化页面名为home
@@ -138,9 +149,9 @@ export default {
           page: this.page,
           page_size: this.page_size,
           order: this.couponSelected,
-          query: this.keyword
-        }
-      }).then(result => {
+          query: this.keyword,
+        },
+      }).then((result) => {
         this.count = result.data.data.count;
         this.videolist = result.data.data.playlists;
 
@@ -153,7 +164,7 @@ export default {
           $("html").animate({ scrollTop: 0 }, 100);
         }
       });
-    }
+    },
   },
   watch: {
     couponSelected() {
@@ -177,9 +188,9 @@ export default {
         this.searchList();
         return;
       }
-    }
+    },
   },
-  components: { NavBar }
+  components: { NavBar },
 };
 </script>
 
