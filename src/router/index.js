@@ -8,6 +8,7 @@ import Detail_mobile from "../views/Detail_mobile.vue";
 import List_mobile from "../views/List_mobile.vue";
 import ListDetail_mobile from "../views/ListDetail_mobile.vue";
 import Login_mobile from "../views/Login_mobile.vue";
+import Login_redirect from "../views/LoginRedirect_mobile.vue";
 import SignUp_mobile from "../views/SignUp_mobile.vue";
 import error from "../views/404.vue";
 
@@ -47,50 +48,54 @@ router.push('/location').catch(err => {err})
 const routes = [
   {
     path: "*",
-    redirect: "/404"
+    redirect: "/404",
   },
   {
     path: "/",
     redirect() {
       return "/home";
-    }
+    },
   },
   {
     path: "/404",
 
-    component: error
+    component: error,
   },
   // 下面是移动端页面
   {
     path: "/home",
-    component: Home_mobile
+    component: Home_mobile,
   },
   {
     path: "/video",
-    component: Detail_mobile
+    component: Detail_mobile,
   },
   {
     path: "/lists",
-    component: List_mobile
+    component: List_mobile,
   },
   {
     path: "/listsdetail",
-    component: ListDetail_mobile
+    component: ListDetail_mobile,
   },
   {
     path: "/login",
-    component: Login_mobile
+    component: Login_mobile,
+  },
+  {
+    path: "/login_redirect",
+    component: Login_redirect,
   },
   {
     path: "/signUp",
-    component: SignUp_mobile
-  }
+    component: SignUp_mobile,
+  },
 ];
 
 const router = new VueRouter({
   /*  mode: 'history',
   base: process.env.BASE_URL,*/
-  routes
+  routes,
 });
 
 // -------------------------危险提示-------------------------

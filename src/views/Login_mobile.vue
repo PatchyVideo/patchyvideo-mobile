@@ -21,7 +21,12 @@
       </div>
 
       <!-- 输入账号和密码的框 -->
-      <el-form ref="loginFormRef" :model="loginFormRef" class="middle in" :rules="rules">
+      <el-form
+        ref="loginFormRef"
+        :model="loginFormRef"
+        class="middle in"
+        :rules="rules"
+      >
         <el-form-item prop="login_name">
           <el-input
             id="username"
@@ -43,13 +48,22 @@
             @keyup.enter.native="login"
           ></el-input>
         </el-form-item>
-        <p id="status" style="text-align: center;" v-bind:class="{alert:status!='就绪'}">{{ status }}</p>
+        <p
+          id="status"
+          style="text-align: center;"
+          v-bind:class="{ alert: status != '就绪' }"
+        >
+          {{ status }}
+        </p>
       </el-form>
 
       <!-- 登录按钮 -->
       <div class="bottom in">
         <div @click="login" class="login in">登录</div>
         <div @click="signUp" class="login in">注册</div>
+        <div class="login in">
+          <a style="color:#FFFFFF" href="/be/oauth?type=qq">QQ登录</a>
+        </div>
       </div>
     </div>
   </div>
@@ -62,25 +76,35 @@ export default {
       // 用户信息
       loginFormRef: {
         login_name: "",
-        login_password: ""
+        login_password: "",
       },
-      // 事先向服务器请求的session值
+      // URL自带或事先向服务器请求的 session 值
       session: "",
       // 表单验证规则
       rules: {
         login_name: [
           { required: true, message: "请输入账号", trigger: "blur" },
-          { min: 2, max: 32, message: "长度在 2 到 32 个字符", trigger: "blur" }
+          {
+            min: 2,
+            max: 32,
+            message: "长度在 2 到 32 个字符",
+            trigger: "blur",
+          },
         ],
         login_password: [
           { required: true, message: "请输入密码", trigger: "blur" },
-          { min: 6, max: 64, message: "长度在 6 到 64 个字符", trigger: "blur" }
-        ]
+          {
+            min: 6,
+            max: 64,
+            message: "长度在 6 到 64 个字符",
+            trigger: "blur",
+          },
+        ],
       },
       // 登录状态
       status: "就绪",
       // 视频列表是否属于加载状态的判断
-      loading: false
+      loading: false,
     };
   },
   created() {
@@ -88,23 +112,23 @@ export default {
     this.$store.commit("changeBgc", "login");
     // 修改网站标题
     document.title = "登录 - Patchyvideo";
-    console.log(
-      "原图P站ID:53270459, 如有侵权请联系开发人员(本站账号: admin)删除"
-    );
   },
-  mounted() {},
+  mounted() {
+    // 从URL获取session值
+    this.session = this.$route.query.session || "";
+  },
   methods: {
     open2() {
       this.$message({
         message: "登录成功",
-        type: "success"
+        type: "success",
       });
     },
 
     open3() {
       this.$message({
         message: "登录失败",
-        type: "warning"
+        type: "warning",
       });
     },
     // 用户注册
@@ -117,86 +141,69 @@ export default {
       this.loading = true;
 
       // 表单验证
-      this.$refs.loginFormRef.validate(valid => {
+      this.$refs.loginFormRef.validate(async (valid) => {
         if (valid) {
           // 验证成功，先获取session
+          await this.getSession();
+
+          // 请求登录
           this.axios({
             method: "post",
-            url: "be/auth/get_session.do",
+            url: "be/login.do",
             data: {
-              type: "LOGIN"
-            }
+              username: this.loginFormRef.login_name,
+              password: this.loginFormRef.login_password,
+              session: this.session,
+            },
           })
-            .then(result => {
-              this.session = result.data.data;
-
-              // 请求登录
-              this.axios({
-                method: "post",
-                url: "be/login.do",
-                data: {
-                  username: this.loginFormRef.login_name,
-                  password: this.loginFormRef.login_password,
-                  session: this.session
-                }
-              })
-                .then(result => {
-                  if (result.status == 200) {
-                    if (result.data.status == "SUCCEED") {
-                      // this.open2();
-                      this.$store.commit(
-                        "getUserName",
-                        this.loginFormRef.login_name
-                      );
-                      this.$store.commit(
-                        "getUserAvatar",
-                        result.data.data.image
-                      );
-                      // 加载结束,加载动画消失
-                      this.loading = false;
-                      // 利用cookie储存登录状态
-                      this.setCookie(
-                        this.loginFormRef.login_name,
-                        result.data.data.image,
-                        7
-                      );
-                      // 如果是从登录按钮跳转到本界面，回到上一个页面
-                      if (this.$store.state.ifRouter == 0) {
-                        this.$store.commit("changeifRouter", "2");
-                        this.$router.go(-1);
-                      }
-                      // 如果是从路由守卫跳转到本界面，进入下一个页面
-                      else if (this.$store.state.ifRouter == 1) {
-                        this.$store.commit("changeifRouter", "2");
-                        var path = this.$store.state.routerPath;
-                        var query = this.$store.state.routerparams;
-                        // 因为发布视频有参数传入的可能,所以做特别的兼容性调整
-                        if (path == "/postvideo") {
-                          this.$router.push({ path: path, query: query });
-                        } else {
-                          this.$router.push({ path: path });
-                        }
-                      }
-                      // 如果是从其他地方跳转到本界面，回到home页面
-                      else {
-                        this.$store.commit("changeifRouter", "2");
-                        this.$router.push({ path: "/home" });
-                      }
-                    } else {
-                      this.open3();
-                      this.loading = false;
-                    }
-                  } else {
-                    this.status = "请求失败";
-                  }
-                })
-                .catch(error => {
+            .then((result) => {
+              if (result.status == 200) {
+                if (result.data.status == "SUCCEED") {
+                  // this.open2();
+                  this.$store.commit(
+                    "getUserName",
+                    this.loginFormRef.login_name
+                  );
+                  this.$store.commit("getUserAvatar", result.data.data.image);
+                  // 加载结束,加载动画消失
                   this.loading = false;
-                  // this.open3();
-                  this.status = "网络错误！";
-                });
+                  // 利用cookie储存登录状态
+                  this.setCookie(
+                    this.loginFormRef.login_name,
+                    result.data.data.image,
+                    7
+                  );
+                  // 如果是从登录按钮跳转到本界面，回到上一个页面
+                  if (this.$store.state.ifRouter == 0) {
+                    this.$store.commit("changeifRouter", "2");
+                    this.$router.go(-1);
+                  }
+                  // 如果是从路由守卫跳转到本界面，进入下一个页面
+                  else if (this.$store.state.ifRouter == 1) {
+                    this.$store.commit("changeifRouter", "2");
+                    var path = this.$store.state.routerPath;
+                    var query = this.$store.state.routerparams;
+                    // 因为发布视频有参数传入的可能,所以做特别的兼容性调整
+                    if (path == "/postvideo") {
+                      this.$router.push({ path: path, query: query });
+                    } else {
+                      this.$router.push({ path: path });
+                    }
+                  }
+                  // 如果是从其他地方跳转到本界面，回到home页面
+                  else {
+                    this.$store.commit("changeifRouter", "2");
+                    this.$router.push({ path: "/home" });
+                  }
+                } else {
+                  this.open3();
+                  this.loading = false;
+                }
+              } else {
+                this.status = "请求失败";
+              }
             })
-            .catch(error => {
+            .catch((error) => {
               this.loading = false;
               // this.open3();
               this.status = "网络错误！";
@@ -208,6 +215,27 @@ export default {
           return false;
         }
       });
+    },
+    // 获取session
+    async getSession() {
+      // 如URL无session，则从后端获取
+      if (!this.session) {
+        await this.axios({
+          method: "post",
+          url: "be/auth/get_session.do",
+          data: {
+            type: "LOGIN",
+          },
+        })
+          .then((result) => {
+            this.session = result.data.data;
+          })
+          .catch(() => {
+            this.loading = false;
+            this.open3();
+            this.status = "网络错误";
+          });
+      }
     },
     // 设置cookie
     // 储存变量为username,userAvatar
@@ -223,8 +251,8 @@ export default {
         userAvatar +
         ";path=/;expires=" +
         date.toUTCString();
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -70,7 +70,13 @@
             prefix-icon="el-icon-message"
           ></el-input>
         </el-form-item>
-        <p id="status" style="text-align: center;" v-bind:class="{alert:status!='就绪'}">{{ status }}</p>
+        <p
+          id="status"
+          style="text-align: center;"
+          v-bind:class="{ alert: status != '就绪' }"
+        >
+          {{ status }}
+        </p>
       </el-form>
 
       <!-- 注册按钮 -->
@@ -90,9 +96,9 @@ export default {
         method: "post",
         url: "be/user/exists.do",
         data: {
-          username: value
-        }
-      }).then(result => {
+          username: value,
+        },
+      }).then((result) => {
         if (result.data.data == true) {
           callback(new Error("该用户名已存在！"));
         } else {
@@ -114,34 +120,49 @@ export default {
         signup_username: "",
         signup_password1: "",
         signup_password2: "",
-        signup_email: ""
+        signup_email: "",
       },
-      // 事先向服务器请求的session值
+      // URL自带或事先向服务器请求的 session 值
       session: "",
       rules: {
         signup_username: [
           { required: true, message: "请输入账号", trigger: "blur" },
           { validator: checkUsername, trigger: "blur" },
-          { min: 2, max: 32, message: "长度在 2 到 32 个字符", trigger: "blur" }
+          {
+            min: 2,
+            max: 32,
+            message: "长度在 2 到 32 个字符",
+            trigger: "blur",
+          },
         ],
         signup_password1: [
           { required: true, message: "请输入密码", trigger: "blur" },
-          { min: 6, max: 64, message: "长度在 6 到 64 个字符", trigger: "blur" }
+          {
+            min: 6,
+            max: 64,
+            message: "长度在 6 到 64 个字符",
+            trigger: "blur",
+          },
         ],
         signup_password2: [
           { required: true, message: "请重复密码", trigger: "blur" },
           { validator: validatePass2, trigger: "blur" },
-          { min: 6, max: 64, message: "长度在 6 到 64 个字符", trigger: "blur" }
+          {
+            min: 6,
+            max: 64,
+            message: "长度在 6 到 64 个字符",
+            trigger: "blur",
+          },
         ],
         signup_email: [
           { required: false, message: "请输入邮箱", trigger: "blur" },
-          { type: "email", message: "请输入正确的邮箱地址", trigger: ["blur"] }
-        ]
+          { type: "email", message: "请输入正确的邮箱地址", trigger: ["blur"] },
+        ],
       },
       // 登录状态
       status: "就绪",
       // 视频列表是否属于加载状态的判断
-      loading: false
+      loading: false,
     };
   },
   created() {
@@ -149,29 +170,30 @@ export default {
     this.$store.commit("changeBgc", "signup");
     // 修改网站标题
     document.title = "注册 - Patchyvideo";
-    console.log(
-      "原图P站ID:44001544, 如有侵权请联系开发人员(本站账号: admin)删除"
-    );
+  },
+  mounted() {
+    // 从URL获取session值
+    this.session = this.$route.query.session || "";
   },
   methods: {
     open2() {
       this.$message({
         message: "注册成功",
-        type: "success"
+        type: "success",
       });
     },
 
     open3() {
       this.$message({
         message: "该用户名已存在！",
-        type: "warning"
+        type: "warning",
       });
     },
 
     open4() {
       this.$message({
         message: "未知错误",
-        type: "warning"
+        type: "warning",
       });
     },
 
@@ -181,29 +203,23 @@ export default {
       this.loading = true;
 
       // 表单验证
-      this.$refs.signupFormRef.validate(valid => {
+      this.$refs.signupFormRef.validate(async (valid) => {
         if (valid) {
           // 验证成功，先获取session
+          await this.getSession();
+
+          // 请求登录
           this.axios({
             method: "post",
-            url: "be/auth/get_session.do",
+            url: "be/signup.do",
             data: {
-              type: "SIGNUP"
-            }
-          }).then(result => {
-            this.session = result.data.data;
-
-            // 请求登录
-            this.axios({
-              method: "post",
-              url: "be/signup.do",
-              data: {
-                username: this.signupFormRef.signup_username,
-                password: this.signupFormRef.signup_password1,
-                email: this.signupFormRef.signup_email,
-                session: this.session
-              }
-            }).then(result => {
+              username: this.signupFormRef.signup_username,
+              password: this.signupFormRef.signup_password1,
+              email: this.signupFormRef.signup_email,
+              session: this.session,
+            },
+          })
+            .then((result) => {
               if (result.status == 200) {
                 if (result.data.status == "SUCCEED") {
                   this.open2();
@@ -225,8 +241,12 @@ export default {
               } else {
                 this.status = "网络异常";
               }
+            })
+            .catch(() => {
+              this.loading = false;
+              this.open4();
+              this.status = "网络错误";
             });
-          });
         } else {
           this.status = "填写格式不正确！";
           // 加载结束,加载动画消失
@@ -234,6 +254,27 @@ export default {
           return false;
         }
       });
+    },
+    // 获取session
+    async getSession() {
+      // 如URL无session，则从后端获取
+      if (!this.session) {
+        await this.axios({
+          method: "post",
+          url: "be/auth/get_session.do",
+          data: {
+            type: "SIGNUP",
+          },
+        })
+          .then((result) => {
+            this.session = result.data.data;
+          })
+          .catch(() => {
+            this.loading = false;
+            this.open4();
+            this.status = "网络错误";
+          });
+      }
     },
     // 设置cookie
     // 储存变量为username
@@ -243,8 +284,8 @@ export default {
       //字符串拼接cookie
       window.document.cookie =
         "username" + ":" + username + ";path=/;expires=" + date.toGMTString();
-    }
-  }
+    },
+  },
 };
 </script>
 
