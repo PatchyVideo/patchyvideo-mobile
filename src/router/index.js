@@ -75,7 +75,7 @@ const routes = [
     component: List_mobile,
   },
   {
-    path: "/listsdetail",
+    path: "/listdetail",
     component: ListDetail_mobile,
   },
   {

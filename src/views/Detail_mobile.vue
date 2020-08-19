@@ -131,7 +131,7 @@
           >
           <span v-else>【没有啦】</span>
           <router-link
-            :to="{ path: '/listsdetail', query: { id: item._id.$oid } }"
+            :to="{ path: '/listdetail', query: { id: item._id.$oid } }"
             tag="a"
             class="listItemTitle"
             >{{ item.item.title }}</router-link
